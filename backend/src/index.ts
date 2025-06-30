@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import db from "./utils/db"
 
 dotenv.config();
 
@@ -17,3 +18,8 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+//Connecting to database b2b_tender in POSTGRESDB
+db.query("SELECT NOW()")
+  .then(res => console.log("PostgreSQL connected:", res.rows[0]))
+  .catch(err => console.error("DB connection error", err))
