@@ -14,8 +14,9 @@ const Login = () => {
     e.preventDefault();
     try{
       const res = await axios.post("http://localhost:3005/api/auth/login",{email,password})
+      localStorage.setItem("email",res.data.user.email)
       localStorage.setItem("token",res.data.token)
-      router.push("/");
+      router.push("/dashboard");
     }
     catch(err:any){
       setError(err.response?.data?.error || "Something went wrong")
