@@ -5,21 +5,23 @@ export interface AuthenticatedRequest extends Request{
     userId: number
 }
 
-export function authenticateJWT(req: AuthenticatedRequest, res: Response, next: NextFunction){
+export function authenticateJWT(req: Request, res: Response, next: NextFunction){
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        return res.status(401).json({ error: "Unauthorized: No token provided" });
+        res.status(401).json({ error: "Unauthorized: No token provided" });
+        return;
     }
 
     const token = authHeader.split(" ")[1];
 
     try{
-        const decoded:any = verifyToken(token)
-        req.userId = decoded.id;
+        const decoded = verifyToken(token) as any;
+        (req as AuthenticatedRequest).userId = decoded.id;
         next()
     }
     catch(error){
-        return res.status(401).json({ error: "Unauthorized: Invalid or expired token" });
+        res.status(401).json({ error: "Unauthorized: Invalid or expired token" });
+        return;
     }
 }
