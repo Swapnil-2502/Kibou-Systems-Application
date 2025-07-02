@@ -1,5 +1,3 @@
-// src/migrations/<timestamp>_create_users_table.ts
-
 import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
