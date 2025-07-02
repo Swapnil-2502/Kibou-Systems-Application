@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import axios from "axios";
+import Link from 'next/link';
 
 const Login = () => {
   const [email,setEmail] = useState("")
@@ -45,10 +46,16 @@ const Login = () => {
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 w-full"
+            className="bg-green-600 text-white px-4 py-2 w-full"
           >
             Login
           </button>
+          <p className="text-center">
+            Not registered yet?{' '}
+            <Link href="/register" className="text-red-600 hover:underline">
+              Register
+            </Link>
+          </p>
         </form>
       </div>
     </div>
