@@ -44,3 +44,36 @@ export async function getMyCompany(req:Request, res: Response):Promise<any>{
     }
 
 }
+
+export async function updateCompany(req: Request, res: Response): Promise<any>{
+    const userId = (req as AuthenticatedRequest).userId
+
+    const companyId = parseInt(req.params.id);
+
+    const { name, industry, description, logo_url } = req.body;
+
+    try{
+        const existing = await db.query(
+             "SELECT * FROM companies WHERE id = $1 AND user_id = $2",
+             [companyId, userId]
+        )
+
+        if(existing.rows.length === 0){
+            return res.status(403).json({ error: "Unauthorized or company not found." });
+        }
+
+        const updated = await db.query(
+            `UPDATE companies
+            SET name = $1, industry = $2, description = $3, logo_url = $4, updated_at = NOW()
+            WHERE id = $5
+            RETURNING *`,
+            [name, industry, description, logo_url, companyId]
+        )
+        
+        res.status(200).json({ company: updated.rows[0] });
+    }
+    catch(error){
+        console.error("Update company error:", error);
+        res.status(500).json({ error: "Internal server error." });
+    }
+}
