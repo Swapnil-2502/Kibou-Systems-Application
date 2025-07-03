@@ -93,7 +93,7 @@ const Dashboard = () => {
               <img
                 src={company.logo_url}
                 alt="Company Logo"
-                className="h-44 w-44 object-cover rounded-md"
+                className="h-44 w-44 object-fill rounded-md"
               />
             )}
           </div>
