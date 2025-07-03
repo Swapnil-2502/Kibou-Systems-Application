@@ -39,7 +39,7 @@ export async function getAllTenders(req: Request,res: Response):Promise<any>{
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const offset = (page - 1) * limit;
-
+    
     try{
         const result = await db.query(
             `
@@ -67,6 +67,32 @@ export async function getAllTenders(req: Request,res: Response):Promise<any>{
     }
     catch(error){
         console.error("Error getting tenders:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+export async function getTenderById(req:Request, res:Response):Promise<any>{
+    const tenderId = parseInt(req.params.id);
+    
+    try{
+        const result = await db.query(
+            `
+            SELECT t.*, c.name as company_name, c.logo_url
+            FROM tenders t
+            JOIN companies c ON t.company_id = c.id
+            WHERE t.id = $1
+            `,
+            [tenderId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Tender not found" });
+        }
+
+        res.json({ tender: result.rows[0] });
+    }
+    catch(err){
+        console.error("Error fetching tender by ID:", err);
         res.status(500).json({ error: "Internal server error" });
     }
 }
