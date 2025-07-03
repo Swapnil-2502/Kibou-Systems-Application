@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import HeaderComponent from '../Components/HeaderComponent';
+import LogoutComponent from '../Components/LogoutComponent';
 
 type Company = {
   id: number,
@@ -40,18 +41,22 @@ const Dashboard = () => {
         setEmail(localStorage.getItem("email") || "Logged in");
 
       }
-      catch(error:any){
+      catch(error: unknown){
         console.error("Unauthorized or error:", error);
 
-        if(error.response?.status === 401){
-          localStorage.removeItem("token"); //If token is invalid or expired
-          router.push("/login");
-        }
-        else if(error.response?.status === 404){
-          setCompany(null)
-          setEmail(localStorage.getItem("email") || "Logged in");
-        }
-        else{
+        if (axios.isAxiosError(error) && error.response) {
+          if(error.response.status === 401){
+            localStorage.removeItem("token"); //If token is invalid or expired
+            router.push("/login");
+          }
+          else if(error.response.status === 404){
+            setCompany(null)
+            setEmail(localStorage.getItem("email") || "Logged in");
+          }
+          else{
+            alert("Something went wrong fetching company info.");
+          }
+        } else {
           alert("Something went wrong fetching company info.");
         }
       }
@@ -69,7 +74,10 @@ const Dashboard = () => {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
+    <>
+    <LogoutComponent />
     <div className="max-w-3xl mx-auto mt-10 px-4">
+     
       <HeaderComponent email={email} />
 
       {company ? (
@@ -111,6 +119,8 @@ const Dashboard = () => {
         </div>
       )}
     </div>
+
+    </>
   );
 }
 

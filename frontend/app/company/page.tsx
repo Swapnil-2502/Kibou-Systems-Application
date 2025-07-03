@@ -6,6 +6,7 @@ import HeaderComponent from '../Components/HeaderComponent';
 import axios from 'axios';
 import supabase from '@/lib/supabase';
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 type CompanyForm = {
     name: string,
@@ -112,21 +113,29 @@ const Company = () => {
             logo_url: logoURL
         }
 
-        if(isEditing && company){
-            await axios.put(`http://localhost:3005/api/company/${company.id}`,payload,{
-                headers: {Authorization: `Bearer ${token}`}
-            })
-            toast.success("Company profile updated!");
-        }else{
-            await axios.post("http://localhost:3005/api/company",payload,{
-                headers: {Authorization: `Bearer ${token}`}
-            })
-            toast.success("Company profile created!");
-        }
+        try{
+             if(isEditing && company){
+                await axios.put(`http://localhost:3005/api/company/${company.id}`,payload,{
+                    headers: {Authorization: `Bearer ${token}`}
+                })
+                toast.success("Company profile updated!");
+            }else{
+                await axios.post("http://localhost:3005/api/company",payload,{
+                    headers: {Authorization: `Bearer ${token}`}
+                })
+                toast.success("Company profile created!");
+            }
 
-        setTimeout(() => {
-            router.push("/dashboard");
-        }, 3000);
+            setTimeout(() => {
+                router.push("/dashboard");
+            }, 3000);
+        }
+        catch(err){
+            const error = err as AxiosError
+            console.error("Failed to save company:", error.response?.data || error.message);
+            toast.error("Failed to save company");
+        }
+       
     }
 
     if (loading) return <p className="text-center mt-10">Loading...</p>;
