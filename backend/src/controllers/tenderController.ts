@@ -134,3 +134,37 @@ export async function updateTender(req:Request,res:Response):Promise<any>{
         res.status(500).json({ error: "Internal server error" });
     }   
 }   
+
+export async function deleteTender(req: Request,res:Response):Promise<any>{
+    const userId = (req as AuthenticatedRequest).userId
+    const tenderId = parseInt(req.params.id);
+
+    try{
+        const companyResult = await db.query(
+            "SELECT id FROM companies WHERE user_id = $1 LIMIT 1",
+            [userId]
+        );
+
+        if (companyResult.rows.length === 0) {
+            return res.status(403).json({ error: "Company not found" });
+        }
+
+        const companyId = companyResult.rows[0].id;
+
+        const tenderCheck = await db.query(
+            "SELECT * FROM tenders WHERE id = $1 AND company_id = $2",
+            [tenderId, companyId]
+        );
+        if (tenderCheck.rows.length === 0) {
+            return res.status(403).json({ error: "You do not own this tender" });
+        }
+
+        await db.query("DELETE FROM tenders WHERE id = $1", [tenderId]);
+
+        res.json({ message: "Tender deleted successfully" });
+    }
+    catch(error){
+        console.error("Error deleting tender:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
