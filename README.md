@@ -205,7 +205,7 @@ npm run dev
 
 ## 📹  Video Link
 
-> Link to Loom video walkthrough goes here
+> [Link to Loom video walkthrough goes here](https://drive.google.com/file/d/1Rz1foqz73c1vf05hTsM7urtnVAO3lUHY/view?usp=sharing)
 
 ----------
 
