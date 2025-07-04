@@ -18,7 +18,7 @@ const Dashboard = () => {
   
   const [loading,setLoading] = useState(true)
   const [company,setCompany] = useState<Company | null>(null)
-  const [email, setEmail] = useState<string | null>(null)
+  
 
   useEffect(()=>{
     const token = localStorage.getItem("token")
@@ -38,7 +38,6 @@ const Dashboard = () => {
 
         setCompany(res.data.company)
 
-        setEmail(localStorage.getItem("email") || "Logged in");
 
       }
       catch(error: unknown){
@@ -51,7 +50,6 @@ const Dashboard = () => {
           }
           else if(error.response.status === 404){
             setCompany(null)
-            setEmail(localStorage.getItem("email") || "Logged in");
           }
           else{
             alert("Something went wrong fetching company info.");
@@ -78,7 +76,7 @@ const Dashboard = () => {
     <LogoutComponent />
     <div className="max-w-3xl mx-auto mt-10 px-4">
      
-      <HeaderComponent email={email} />
+      <HeaderComponent/>
 
       {company ? (
         <div className="border rounded-xl p-6 shadow-md mt-40">

@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-type HeadProps = {
-  email?: string | null;
-}
+// type HeadProps = {
+//   email?: string | null;
+// }
+//{email}: HeadProps
+const HeaderComponent = () => {
+  const [getemail,setgetEmail] = useState("");
 
-const HeaderComponent = ({email}: HeadProps) => {
+  useEffect(()=>{
+    setgetEmail(localStorage.getItem('email') || "Logged in")
+  }, [])
   return (
     <>
       <h1 className="text-3xl font-bold mb-2 text-center">Tender Management Application</h1>
-      {email ? <p className="text-center text-gray-600 mb-6">Logged in as: {email}</p>
+      {getemail ? <p className="text-center text-gray-600 mb-6">Logged in as: {getemail}</p>
       :null
       }
       
