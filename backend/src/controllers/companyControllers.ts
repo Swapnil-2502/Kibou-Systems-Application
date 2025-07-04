@@ -77,3 +77,26 @@ export async function updateCompany(req: Request, res: Response): Promise<any>{
         res.status(500).json({ error: "Internal server error." });
     }
 }
+
+export const searchCompanies = async (req: Request, res: Response):Promise<any> => {
+  const query = req.query.query as string;
+
+  if (!query || query.trim() === "") {
+    return res.status(400).json({ error: "Query parameter is required" });
+  }
+
+  try {
+    const result = await db.query(
+      `SELECT id, name, industry, description, logo_url
+       FROM companies
+       WHERE LOWER(name) LIKE $1 OR LOWER(industry) LIKE $1
+       ORDER BY name ASC`,
+      [`%${query.toLowerCase()}%`]
+    );
+
+    res.json({ companies: result.rows });
+  } catch (err) {
+    console.error("Error searching companies:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
