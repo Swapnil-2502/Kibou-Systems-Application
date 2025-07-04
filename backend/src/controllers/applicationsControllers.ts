@@ -75,3 +75,47 @@ export const getMyApplication = async (req: Request, res: Response): Promise<any
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const getApplicationsByTender = async (req: Request, res: Response):Promise<any> => {
+  const userId = (req as AuthenticatedRequest).userId;
+  const tenderId = parseInt(req.params.tenderId);
+
+  if (isNaN(tenderId)) {
+    return res.status(400).json({ error: "Invalid tender ID" });
+  }
+
+  try {
+    // 1. Ensure the tender belongs to the user
+    const tenderCheck = await db.query(
+      `SELECT t.id
+       FROM tenders t
+       JOIN companies c ON t.company_id = c.id
+       WHERE t.id = $1 AND c.user_id = $2`,
+      [tenderId, userId]
+    );
+
+    if (tenderCheck.rows.length === 0) {
+      return res.status(403).json({ error: "You do not own this tender" });
+    }
+    
+    const result = await db.query(
+      `SELECT 
+         a.id AS application_id,
+         a.message,
+         a.budget,
+         a.created_at,
+         comp.name AS company_name,
+         comp.industry AS company_industry
+       FROM applications a
+       JOIN companies comp ON a.company_id = comp.id
+       WHERE a.tender_id = $1
+       ORDER BY a.created_at DESC`,
+      [tenderId]
+    );
+
+    res.json({ applications: result.rows });
+  } catch (err) {
+    console.error("Error retrieving applications:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

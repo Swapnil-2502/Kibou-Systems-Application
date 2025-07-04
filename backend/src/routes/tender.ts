@@ -10,6 +10,6 @@ router.get("/",getAllTenders)
 router.get("/mine",authenticateJWT,getMyTender)
 router.put("/:id",authenticateJWT,updateTender)
 router.delete("/:id",authenticateJWT,deleteTender)
-router.get("/:id",getTenderById)
+router.get("/:id",authenticateJWT,getTenderById)
 
 export default router
