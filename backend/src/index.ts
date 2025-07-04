@@ -5,6 +5,7 @@ import db from "./utils/db"
 import authRoutes from "./routes/auth"
 import companyRoutes from "./routes/company"
 import tenderRoutes from "./routes/tender"
+import applicationRoutes from "./routes/applications"
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/api/auth",authRoutes)
 app.use("/api/company",companyRoutes)
 app.use("/api/tender",tenderRoutes)
+app.use("/api/applications",applicationRoutes)
 
 const PORT = process.env.PORT || 4000;
 
