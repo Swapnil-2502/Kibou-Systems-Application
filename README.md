@@ -111,126 +111,38 @@ npm run dev
 ## 🗂 API Endpoints
 
 ### 🔐 Auth Endpoints
+| Method | Endpoint             | Description             |
+|--------|----------------------|-------------------------|
+| POST   | `/api/auth/register` | Register a new user     |
+| POST   | `/api/auth/login`    | Login and get JWT token |
 
-Method
-
-Endpoint
-
-Description
-
-POST
-
-`/api/auth/register`
-
-Register a new user
-
-POST
-
-`/api/auth/login`
-
-Login and get JWT token
 
 ### 🏢 Company Endpoints
+| Method | Endpoint                              | Description                             |
+|--------|---------------------------------------|-----------------------------------------|
+| POST   | `/api/company`                        | Create a company profile                |
+| GET    | `/api/company/me`                     | Get company profile of logged-in user   |
+| PUT    | `/api/company`                        | Update logged-in user's company profile |
+| GET    | `/api/company/search?query=xyz`     | Search by name or industry              |
 
-Method
-
-Endpoint
-
-Description
-
-POST
-
-`/api/company`
-
-Create a company profile
-
-GET
-
-`/api/company/me`
-
-Get company profile of logged-in user
-
-PUT
-
-`/api/company`
-
-Update logged-in user's company profile
-
-GET
-
-`/api/companies/search?query=xyz`
-
-Search by name or industry
 
 ### 📑 Tender Endpoints
-
-Method
-
-Endpoint
-
-Description
-
-POST
-
-`/api/tender`
-
-Create a new tender
-
-GET
-
-`/api/tender`
-
-Get all tenders
-
-GET
-
-`/api/tender/mine`
-
-Get logged-in user's tenders
-
-GET
-
-`/api/tender/:id`
-
-Get tender by ID
-
-PUT
-
-`/api/tender/:id`
-
-Update a tender
-
-DELETE
-
-`/api/tender/:id`
-
-Delete a tender
+| Method | Endpoint            | Description                  |
+|--------|---------------------|------------------------------|
+| POST   | `/api/tender`       | Create a new tender          |
+| GET    | `/api/tender`       | Get all tenders              |
+| GET    | `/api/tender/mine`  | Get logged-in user's tenders |
+| GET    | `/api/tender/:id`   | Get tender by ID             |
+| PUT    | `/api/tender/:id`   | Update a tender              |
+| DELETE | `/api/tender/:id`   | Delete a tender              |
 
 ### 📨 Applications Endpoints
+| Method | Endpoint                          | Description                                 |
+|--------|-----------------------------------|---------------------------------------------|
+| POST   | `/api/applications/:tenderId`     | Submit an application for a tender          |
+| GET    | `/api/applications/mine`          | Get tenders applied to by current company   |
+| GET    | `/api/applications/tender/:id`    | Get all applications for a specific tender  |
 
-Method
-
-Endpoint
-
-Description
-
-POST
-
-`/api/applications/:tenderId`
-
-Submit an application for a tender
-
-GET
-
-`/api/applications/mine`
-
-Get tenders applied to by current company
-
-GET
-
-`/api/applications/tender/:id`
-
-Get all applications for a specific tender
 
 ----------
 
@@ -254,61 +166,18 @@ Get all applications for a specific tender
 
 ----------
 
-## 🧭 Frontend Routes
+### 🧭 Frontend Routes
+| Page                    | Path                               | Description                          |
+|-------------------------|------------------------------------|--------------------------------------|
+| Register/Login          | `/register`, `/login`              | Auth pages                           |
+| Dashboard               | `/dashboard`                       | Main dashboard after login           |
+| All Tenders             | `/tenders`                         | Lists all tenders                    |
+| My Tenders              | `/tenders/mine`                    | Shows your company's tenders         |
+| Create/Edit Tender      | `/tenders/form?id=optional`        | Form to add/edit a tender            |
+| Apply to Tender         | `/tenders/applicationform`         | Form to apply to a tender            |
+| Your Applications       | `/applications/mine`               | View tenders you applied to          |
+| Applications per Tender | `/tenders/mine/applications`       | View applicants for your tender      |
 
-Page
-
-Path
-
-Description
-
-Register/Login
-
-`/register`, `/login`
-
-Auth pages
-
-Dashboard
-
-`/dashboard`
-
-Main dashboard after login
-
-All Tenders
-
-`/tenders`
-
-Lists all tenders
-
-My Tenders
-
-`/tenders/mine`
-
-Shows your company's tenders
-
-Create/Edit Tender
-
-`/tenders/form?id=optional`
-
-Form to add/edit a tender
-
-Apply to Tender
-
-`/tenders/applicationform`
-
-Form to apply to a tender
-
-Your Applications
-
-`/applications/mine`
-
-View tenders you applied to
-
-Applications per Tender
-
-`/tenders/mine/applications`
-
-View applicants for your tender
 
 ----------
 
