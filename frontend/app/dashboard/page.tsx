@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import HeaderComponent from '../Components/HeaderComponent';
-import LogoutComponent from '../Components/LogoutComponent';
+import Navbar from '../Components/Navbar';
 
 type Company = {
   id: number,
@@ -73,7 +73,7 @@ const Dashboard = () => {
 
   return (
     <>
-    <LogoutComponent />
+    <Navbar />
     <div className="max-w-3xl mx-auto mt-10 px-4">
      
       <HeaderComponent/>
@@ -87,7 +87,7 @@ const Dashboard = () => {
               <p className="text-sm text-gray-500 mb-2">{company.industry}</p>
               <p className="mb-4">{company.description}</p>
               <button
-                className="bg-yellow-500 text-white px-4 py-2 rounded"
+                className="bg-yellow-500 text-white px-4 py-2 rounded cursor-pointer"
                 onClick={handleCreateOrEdit}
               >
                 Edit Profile
@@ -109,7 +109,7 @@ const Dashboard = () => {
         <div className="text-center mt-20">
           <p className="mb-4">You have not created a company profile yet.</p>
           <button
-            className="bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer"
             onClick={handleCreateOrEdit}
           >
             Create Company Profile

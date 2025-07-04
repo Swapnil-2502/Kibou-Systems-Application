@@ -11,7 +11,7 @@ const LogoutComponent = () => {
     }
   return (
      <button
-        className="bg-red-500 text-white px-3 py-1 rounded mt-10 ml-20"
+        className="bg-red-500 text-white px-3 py-1 rounded  ml-20 cursor-pointer"
         onClick={handleLogout}
       >
         Logout

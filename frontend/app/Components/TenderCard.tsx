@@ -17,9 +17,10 @@ type Props = {
   Apply?: (id:number) => void;
   myCompanyId?: number | null;
   appliedTenderIds?: number[];
+  onViewApplications?: (id: number) => void; 
 };
 
-const TenderCard: React.FC<Props> = ({tender, onEdit, onDelete, Apply, myCompanyId, appliedTenderIds}) => {
+const TenderCard: React.FC<Props> = ({tender, onEdit, onDelete, Apply, myCompanyId, appliedTenderIds, onViewApplications}) => {
     return (
         <div className="border rounded p-4 mb-4 shadow hover:shadow-md transition">
             <div className="flex justify-between items-center mb-2">
@@ -33,6 +34,14 @@ const TenderCard: React.FC<Props> = ({tender, onEdit, onDelete, Apply, myCompany
                             className="text-blue-500 hover:underline cursor-pointer"
                         >
                             Edit
+                        </button>
+                    )}
+                    {onViewApplications && (
+                        <button
+                            onClick={() => onViewApplications(tender.id)}
+                            className="text-blue-600 hover:underline ml-2 cursor-pointer"
+                        >
+                            View Applications
                         </button>
                     )}
                     {onDelete && (

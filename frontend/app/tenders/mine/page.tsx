@@ -8,6 +8,7 @@ import HeaderComponent from "@/app/Components/HeaderComponent";
 
 type Tender = {
   id: number;
+  company_id:number,
   title: string;
   description: string;
   deadline: string;
@@ -40,6 +41,10 @@ export default function MyTenders(){
 
   const handleEdit = (id: number) => {
     router.push(`/tenders/form/?id=${id}`);
+  };
+
+  const handleViewApplications = (id: number) => {
+    router.push(`/tenders/mine/viewapplications?id=${id}`);
   };
 
   const handleDelete = async (id: number) => {
@@ -77,6 +82,7 @@ export default function MyTenders(){
               key={tender.id}
               tender={tender}
               onEdit={handleEdit}
+              onViewApplications={handleViewApplications}
               onDelete={handleDelete}
             />
           ))

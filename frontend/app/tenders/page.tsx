@@ -45,9 +45,7 @@ export default function MyTenders(){
           setTenders(tendersRes.data.tenders);
           setMyCompanyId(companyRes.data.company.id);
           type Application = { tender_id: number };
-          setAppliedTenderIds(applicationsRes.data.applications.map((app: Application) => app.tender_id));
-
-          console.log(applicationsRes)
+          setAppliedTenderIds(applicationsRes.data.applications.map((app: Application) => app.tender_id))
 
         } catch (err) {
           console.error("Error loading data:", err);

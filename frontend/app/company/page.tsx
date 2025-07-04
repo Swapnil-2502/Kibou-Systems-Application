@@ -7,6 +7,7 @@ import axios from 'axios';
 import supabase from '@/lib/supabase';
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
+import Navbar from '../Components/Navbar';
 
 type CompanyForm = {
     name: string,
@@ -141,7 +142,8 @@ const Company = () => {
     if (loading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
-    <>
+    <>  
+        <Navbar />
         <div className="max-w-2xl mx-auto mt-10 px-4">
             <HeaderComponent />
             <h1 className="text-2xl font-bold mb-4 mt-10">
